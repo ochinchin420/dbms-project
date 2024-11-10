@@ -124,37 +124,31 @@
                             echo "<td><h5>".$rstu[$i]['name']."</h5></td>";
                             $dsid=$rstu[$i]['sid'];
                             
-                            for($j=$sdate;$j<=$edate;$j=$j+86400)
-                            {
-                                //$thisDate = date( 'Y-m-d', $j );
-                                //echo "$j"."=".$thisDate."<br>";
-
-                                $weekday= date("l", $j );
+                            for ($j = $sdate; $j <= $edate; $j += 86400) {
+                                $weekday = date("l", $j);
                                 $currentDate = date('Y-m-d', $j);
                                 $normalized_weekday = strtolower($weekday);
-                                if(($normalized_weekday!="saturday") && ($normalized_weekday!="sunday"))
-                                {
-
-
-                                    $sql = "SELECT ispresent FROM attendance WHERE id=$selsub AND date>=($j-86400) AND date<=$j" ;
+                                
+                                if ($normalized_weekday != "saturday" && $normalized_weekday != "sunday") {
+                                    // Modify the SQL query to select attendance for the specific student and date
+                                    $sql = "SELECT ispresent FROM attendance WHERE id = :subjectId AND sid = :studentId AND date>=($j-86400) AND date<=$j";
                                     $stmt = $conn->prepare($sql); 
-                                    $stmt->execute();
-                                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-                                    if(!empty($result)){
-                                    //print_r($result);
+                                    $stmt->execute([
+                                        ':subjectId' => $selsub,
+                                        ':studentId' => $dsid
+                                    ]);
+                                    $result = $stmt->fetch(PDO::FETCH_ASSOC); 
+                                    
+                                    if (!empty($result)) {
                                         $totlec++;
-                                        if($result[0]['ispresent']==1)
-                                        {
+                                        if ($result['ispresent'] == 1) {
                                             $present++;
-                                            echo"<td><span class='text-success'>Present</span></td>";
-                                        }
-                                        else
-                                        {
-                                            echo"<td><span class='text-danger'>Absent</span></td>";
+                                            echo "<td><span class='text-success'>Present</span></td>";
+                                        } else {
                                             $absent++;
+                                            echo "<td><span class='text-danger'>Absent</span></td>";
                                         }
-                                    }else
-                                    {
+                                    } else {
                                         echo "<td><a href='index.php?subject=" . $selsub . "&date=" . $currentDate . "'><button type='button' class='btn btn-success btn-sm' style='border-radius:0%'>Take Attendance</button></a></td>";
                                     }
                                 }
