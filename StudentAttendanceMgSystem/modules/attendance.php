@@ -180,6 +180,7 @@
 									if (count($ispresent)) {
 										$p = (in_array($st_sid[$j], $ispresent)) ? 1 : 0;	
 									}
+									echo $p;
 									
 									$stmtInsert->bindParam(':isMarked', $p);
 									$stmtInsert->bindParam(':aid', $attt_aid[$j]); 
@@ -216,6 +217,7 @@
 										$p = (in_array($st_sid[$j], $ispresent)) ? 1 : 0;	
 									}
 									
+									echo $p;
 
 									$stmtInsert->bindParam(':sid', $st_sid[$j]);
 									$stmtInsert->bindParam(':date', $tstamp);

@@ -31,9 +31,9 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
 			<ul class="nav sidebar-nav">
 					<li class="sidebar-brand">
-							<a href="index.php">
-								
-							</a>
+						<a href="index.php" style="color: #fff; background-color: #000; padding: 3px; display: block;">
+							Navbar
+						</a>
 					</li>
 					<li>
 							<a href="index.php">Login</a>
