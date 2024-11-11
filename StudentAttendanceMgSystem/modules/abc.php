@@ -1,5 +1,3 @@
-
-
 <?php
 
      include 'config1.php';
@@ -12,10 +10,6 @@
       {
         if(!empty($nm) && !empty($pass) )
         {
-
-
-          
-    
           $stmt = $conn->prepare("SELECT uid, uname FROM user WHERE uname= ? AND password=?"); 
             $stmt->execute(array($nm,$pass));
 
